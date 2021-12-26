@@ -1,16 +1,39 @@
 #https://www.youtube.com/watch?v=9aYuQmMJvjA&t=364s
+#https://www.youtube.com/watch?v=1gQR24B3ISE
 
 import os
 import cv2
 import numpy as np
 from tqdm import tqdm
 import matplotlib.pyplot as plt
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
 
-# Press the green button in the gutter to run the script.
+
 if __name__ == '__main__':
     print('welcome to ' + 'Cats v. Dogs')
-
 REBUILD_DATA = False
+
+class Net (nn.Module):
+    def __init__(self):
+        super().__init__()
+        #   1 input channel, 32 output channels,  kernel size 5 for five 2d convolution layers
+        self.conv1 = nn.Conv2d(1,32,5)
+        self.conv2 = nn.Conv2d(32, 64, 5)
+        self.conv3 = nn.Conv2d(64, 128, 5)
+
+        x = torch.randn(50,50).view(-1,1,50,50)
+        self._to_linear = None
+        #self.fc1 = nn.Linear(???, 512)
+        #self.fc2 = nn.Linear(512,2)
+    def convs(self,x):
+        ''' Rectified Linear Activation Function.
+            The ReLu function enables us to detect and present the state of the model results'''
+        x = F.max_pool2d((F.relu(self.conv1(x)),(2,2)))
+        if self._to_linear is None:
+            self._to_linear =
+
 class DogsVSCats():
     IMG_SIZE: int = 50
     CATS="PetImages/Cat"
